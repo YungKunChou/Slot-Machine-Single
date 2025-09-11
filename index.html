@@ -374,9 +374,17 @@
         </header>
         
         <!-- THEME SWITCHER -->
-        <div id="theme-switcher" class="flex justify-center gap-4 mb-8">
-            <button data-theme="default" class="btn btn-secondary theme-btn">中川政七風格</button>
-            <button data-theme="rog" class="btn btn-secondary theme-btn">ASUS ROG 風格</button>
+        <div class="relative mb-8">
+             <!-- Centered Theme Buttons -->
+            <div id="theme-switcher" class="flex justify-center gap-4 py-2">
+                <button data-theme="default" class="btn btn-secondary theme-btn">中川政七風格</button>
+                <button data-theme="rog" class="btn btn-secondary theme-btn">ASUS ROG 風格</button>
+            </div>
+            <!-- Music Controls - position changes based on screen size -->
+            <div id="youtube-player-controls" class="sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2 flex justify-center sm:justify-end items-center gap-2 mt-4 sm:mt-0">
+                <button id="toggle-music-btn" class="btn btn-secondary text-sm">🔇 開啟背景音樂</button>
+                <div id="youtube-player" class="w-0 h-0 overflow-hidden"></div>
+            </div>
         </div>
 
 
@@ -388,10 +396,6 @@
             </div>
             <div class="flex flex-wrap items-center gap-4">
                 <button id="add-prize-btn" class="btn btn-primary">＋ 新增獎品</button>
-                <div id="youtube-player-controls" class="flex items-center gap-2">
-                    <button id="toggle-music-btn" class="btn btn-secondary text-sm">🔇 開啟背景音樂</button>
-                    <div id="youtube-player" class="w-0 h-0 overflow-hidden"></div>
-                </div>
             </div>
         </div>
 
@@ -837,7 +841,7 @@
                 isSpinning = true;
                 isStopping = false;
                 slotLever.classList.add('pulled');
-                drawStatus.textContent = '祝您好運！再次拉動拉桿即可煞車！';
+                drawStatus.textContent = '祝您好運！再次拉動拉桿即可換檔後煞停！';
                 
                 const reelItems = Array.from(slotReel.querySelectorAll('.reel-item'));
                 const itemHeight = reelItems[0].offsetHeight;
@@ -946,4 +950,5 @@
     <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
+
 
