@@ -606,7 +606,16 @@
                     return;
                 }
 
-                const displayItems = [...availablePrizes, ...availablePrizes, ...availablePrizes, ...availablePrizes, ...availablePrizes];
+                const TARGET_REEL_LENGTH = 50; // 設定目標滾輪長度
+                const availablePrizeCount = availablePrizes.length;
+                // 動態計算複製倍數，確保總長度接近目標，且至少複製 5 次以獲得良好視覺效果
+                const replicationFactor = Math.max(5, Math.ceil(TARGET_REEL_LENGTH / availablePrizeCount));
+
+                let displayItems = [];
+                for (let i = 0; i < replicationFactor; i++) {
+                    displayItems = displayItems.concat(availablePrizes);
+                }
+
 
                 slotReel.innerHTML = displayItems.map(prize => `
                     <div class="reel-item" data-name="${prize.name}">
@@ -838,18 +847,28 @@
                 const wonPrizeName = prizePool[randomIndex];
                 
                 let targetIndexInDOM = -1;
-                const basePoolSize = prizePool.length;
-                const searchStartIndex = basePoolSize * 3;
-                const searchEndIndex = basePoolSize * 4;
+                // 為了讓滾動看起來夠長，我們從滾輪的後半段開始尋找目標
+                const searchStartIndex = Math.floor(reelItems.length / 2);
                 
-                for(let i = searchStartIndex; i < searchEndIndex; i++) {
+                // 從後半段中尋找第一個符合中獎獎項的元素
+                for(let i = searchStartIndex; i < reelItems.length; i++) {
                     if (reelItems[i] && reelItems[i].dataset.name === wonPrizeName) {
                         targetIndexInDOM = i;
                         break;
                     }
                 }
+                // 如果後半段找不到（機率極低），則從前半段找一個作為備案
                 if (targetIndexInDOM === -1) {
-                    targetIndexInDOM = searchStartIndex + Math.floor(Math.random() * basePoolSize);
+                    for(let i = 0; i < searchStartIndex; i++) {
+                        if (reelItems[i] && reelItems[i].dataset.name === wonPrizeName) {
+                            targetIndexInDOM = i;
+                            break;
+                        }
+                    }
+                }
+                // 如果真的完全找不到（理論上不可能），隨機指定一個後半段的位置
+                 if (targetIndexInDOM === -1) {
+                    targetIndexInDOM = searchStartIndex + Math.floor(Math.random() * (reelItems.length - searchStartIndex));
                 }
 
                 const targetPosition = targetIndexInDOM * itemHeight;
