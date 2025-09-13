@@ -610,10 +610,10 @@
                     return;
                 }
 
-                const TARGET_REEL_LENGTH = 50; // 設定目標滾輪長度
+                const TARGET_REEL_LENGTH = 70; // 設定目標滾輪長度
                 const availablePrizeCount = availablePrizes.length;
                 // 動態計算複製倍數，確保總長度接近目標，且至少複製 5 次以獲得良好視覺效果
-                const replicationFactor = Math.max(5, Math.ceil(TARGET_REEL_LENGTH / availablePrizeCount));
+                const replicationFactor = Math.max(7, Math.ceil(TARGET_REEL_LENGTH / availablePrizeCount));
 
                 let displayItems = [];
                 for (let i = 0; i < replicationFactor; i++) {
